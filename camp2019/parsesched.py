@@ -38,6 +38,7 @@ def on_nowish():
 
 def main():
     eventson = on_nowish()
+    print("Events on nowish:")
     for event in eventson:
         print("%s: %s (in %s)" % event)
 
