@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import json
 import time
+import sys
+
+NUM_HOURS=1
 
 def load_file():
     f = open("everything.schedule.json", "r")
@@ -17,7 +20,7 @@ def get_day(conf, day):
 def event_on_nowish(event, hour):
     eventtime = event["start"]
     eventhour = int(eventtime[:2])
-    return (eventhour == hour) or (eventhour == hour + 1)
+    return (eventhour >= hour) and (eventhour <= hour + NUM_HOURS + 1)
 
 
 def on_nowish():
@@ -37,6 +40,10 @@ def on_nowish():
     return sorted(eventson, key = lambda e : e[0])
 
 def main():
+    try:
+        NUM_HOURS = int(sys.argv[1])
+    except:
+        pass
     eventson = on_nowish()
     print("Events on nowish:")
     for event in eventson:
